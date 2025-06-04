@@ -1,0 +1,30 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Visual Studio
+.vscode/
+.vs/
+
+# Configuración de entorno
+appsettings.*.json
+!appsettings.json
+
+# Rider
+.idea/
+
+# Archivos sensibles
+secrets.json
