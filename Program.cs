@@ -10,7 +10,16 @@ builder.Services.AddHttpClient<ApisExternas>();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IClimaService, ClimaService>();
 
-
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5174")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -22,7 +31,8 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 app.UseHttpsRedirection();
-
+// Habilitar CORS
+app.UseCors("PermitirFrontend");
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
