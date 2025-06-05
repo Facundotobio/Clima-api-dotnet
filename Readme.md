@@ -18,3 +18,12 @@ Registrate en WeatherAPI.com
 - `Controllers/`: Controladores de API (`ClimaController`)
 - `Models/`: Modelos para deserialización y respuesta
 - `Services/`: Lógica de negocio y consumo de API externa
+
+## 🌐 API en producción
+
+- URL base: [https://clima-api-dotnet.onrender.com](https://clima-api-dotnet.onrender.com)
+
+### Ejemplos de endpoints
+
+- `/api/clima?ciudad=Buenos Aires&dias=3`
+- `/api/clima/comparar?ciudad1=Buenos Aires&ciudad2=Madrid&dias=5`
