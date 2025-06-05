@@ -3,14 +3,16 @@ using Clima.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configuración de Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Registro de servicios HTTP y de tu lógica de negocio
 builder.Services.AddHttpClient<ApisExternas>();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IClimaService, ClimaService>();
 
-// CORS
+// Configuración de CORS: permite solicitudes desde localhost y tu app en Vercel
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirFrontend", policy =>
@@ -26,16 +28,19 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// APLICAR CORS ANTES QUE OTROS MIDDLEWARES
+app.UseCors("PermitirFrontend");
+
+// Habilitar Swagger (generalmente en desarrollo)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Habilitar CORS
-app.UseCors("PermitirFrontend");
-app.MapControllers();
 app.UseHttpsRedirection();
+app.MapControllers();
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
