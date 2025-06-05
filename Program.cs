@@ -15,9 +15,12 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "http://localhost:5173",
+            "https://clima-app-react-ten.vercel.app"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
@@ -29,10 +32,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapControllers();
-app.UseHttpsRedirection();
 // Habilitar CORS
 app.UseCors("PermitirFrontend");
+app.MapControllers();
+app.UseHttpsRedirection();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
