@@ -13,11 +13,23 @@ namespace Clima.API.Services
             _apisExternas = apisExternas;
         }
 
-        public async Task<PronosticoClimaticoDto> GetForecastAsync(string ciudad, int dias)
+        public async Task<PronosticoClimaticoDto?> GetForecastAsync(string ciudad, int dias)
         {
-            var json = await _apisExternas.ObtenerPronosticoAsync(ciudad, dias);
-            var data = JsonConvert.DeserializeObject<PronosticoClimaticoDto>(json);
-            return data!;
+            try
+            {
+                var json = await _apisExternas.ObtenerPronosticoAsync(ciudad, dias);
+
+                if (string.IsNullOrWhiteSpace(json))
+                    return null;
+
+                var data = JsonConvert.DeserializeObject<PronosticoClimaticoDto>(json);
+                return data;
+            }
+            catch (Exception)
+            {
+                throw new ApplicationException("Los datos ingresados son inválidos.");
+            }
         }
+
     }
 }
