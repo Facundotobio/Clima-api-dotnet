@@ -38,6 +38,9 @@ namespace Clima.API.Controllers
             if (string.IsNullOrWhiteSpace(ciudad1) || string.IsNullOrWhiteSpace(ciudad2))
                 return BadRequest("Debe especificar ambas ciudades para comparar.");
 
+            if (string.Equals(ciudad1.Trim(), ciudad2.Trim(), StringComparison.OrdinalIgnoreCase))
+                return BadRequest("Los destinos a comparar no pueden ser iguales.");            
+
             if (dias < 1 || dias > 14)
                 return BadRequest("La cantidad de días debe estar entre 1 y 14.");
 
